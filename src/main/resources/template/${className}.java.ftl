@@ -8,14 +8,12 @@ package ${packageName};
 
 public class ${className} {
 
-	//alias
-	public static final String TABLE_ALIAS = "${className}";
+	public static final String TABLE_ALIAS = "${table.tableName}";
 
-	//columns START
 <#list table.columns as column>
+	@DBColumn(javaType = ${column.javaType.simpleName}.class,columnType = ${column.columnDbTypeStr},columnName = "${column.columnName}")
 	private ${column.javaType.simpleName} ${column.columnCamelName};
 </#list>
-	//columns END
 <@generateGetterSetter/>
 }
 
@@ -34,6 +32,7 @@ public class ${className} {
 
 
 <#macro generateImports>
+	import java.sql.Types;
     <#list imports as import>
 import ${import.name};
     </#list>

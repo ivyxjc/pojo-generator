@@ -1,6 +1,5 @@
 package xyz.ivyxjc.config;
 
-
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -21,7 +20,6 @@ public class DatabaseConfig {
     @Autowired
     private Environment env;
 
-
     @Bean
     public DataSource getDataSource() {
         BasicDataSource dataSource = new BasicDataSource();
@@ -33,7 +31,6 @@ public class DatabaseConfig {
         return dataSource;
     }
 
-
     @Bean
     public JdbcTemplate jdbcTemplate(DataSource dataSource) {
         return new JdbcTemplate(dataSource);
@@ -43,5 +40,4 @@ public class DatabaseConfig {
     public NamedParameterJdbcTemplate namedParameterJdbcTemplate(DataSource dataSource) {
         return new NamedParameterJdbcTemplate(dataSource);
     }
-
 }

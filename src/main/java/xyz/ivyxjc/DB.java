@@ -1,6 +1,5 @@
 package xyz.ivyxjc;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -11,10 +10,8 @@ import javax.sql.DataSource;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-
 @Repository
 public class DB {
-
 
     @Autowired
     private JdbcTemplate mJdbcTemplate;
@@ -22,11 +19,15 @@ public class DB {
     @Autowired
     private DataSource mDataSource;
 
-
-    public Table getDbStructure(String catalog, String schema, String tableName, String columnNamePattern) {
+    public Table getDbStructure(
+            String catalog, String schema, String tableName, String columnNamePattern) {
         Table table = new Table();
         try {
-            ResultSet rs = mDataSource.getConnection().getMetaData().getColumns(catalog, schema, tableName, columnNamePattern);
+            ResultSet rs =
+                    mDataSource
+                            .getConnection()
+                            .getMetaData()
+                            .getColumns(catalog, schema, tableName, columnNamePattern);
 
             table.setTableName(tableName);
             while (rs.next()) {
@@ -40,10 +41,7 @@ public class DB {
         return table;
     }
 
-
     public Table getDbStructure(String catalog, String schema, String tableName) {
         return getDbStructure(catalog, schema, tableName, "%");
     }
-
 }
-

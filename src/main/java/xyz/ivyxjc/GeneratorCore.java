@@ -15,14 +15,12 @@ import java.util.*;
 @Service
 public class GeneratorCore {
 
-
     public void generateCore(Table table, String packageName) {
         Configuration cfg = new Configuration(Configuration.DEFAULT_INCOMPATIBLE_IMPROVEMENTS);
 
         cfg.setClassForTemplateLoading(Main.class, "/template");
         cfg.setDefaultEncoding("UTF-8");
         cfg.setDefaultEncoding("UTF-8");
-
 
         Set<Class> set = new HashSet<>();
         Map<String, Object> map = new HashMap<>();
@@ -41,7 +39,11 @@ public class GeneratorCore {
         try {
             Template template = cfg.getTemplate("${className}.java.ftl");
             String packageNameWithBackslash = packageName.replace(".", "\\");
-            Writer writer = new FileWriter(String.format("src\\main\\java\\%s\\%s.java", packageNameWithBackslash, table.getTableCamelNameFirstUpper()));
+            Writer writer =
+                    new FileWriter(
+                            String.format(
+                                    "src\\main\\java\\%s\\%s.java",
+                                    packageNameWithBackslash, table.getTableCamelNameFirstUpper()));
             template.process(map, writer);
         } catch (IOException | TemplateException e) {
             e.printStackTrace();

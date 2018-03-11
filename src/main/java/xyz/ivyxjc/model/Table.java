@@ -19,8 +19,9 @@ public class Table {
         this.mColumns = new ArrayList<>();
         this.tableName = tableName;
         this.tableCamelName = CommonUtils.convertDbTypeToCamel(tableName);
-        this.tableCamelNameFirstUpper = Character.toUpperCase(tableCamelName.charAt(0)) + tableCamelName.substring(1, tableCamelName.length());
-
+        this.tableCamelNameFirstUpper =
+                Character.toUpperCase(tableCamelName.charAt(0))
+                        + tableCamelName.substring(1, tableCamelName.length());
     }
 
     public String getTableName() {
@@ -30,8 +31,9 @@ public class Table {
     public void setTableName(String tableName) {
         this.tableName = tableName;
         this.tableCamelName = CommonUtils.convertDbTypeToCamel(tableName);
-        this.tableCamelNameFirstUpper = Character.toUpperCase(tableCamelName.charAt(0)) + tableCamelName.substring(1, tableCamelName.length());
-
+        this.tableCamelNameFirstUpper =
+                Character.toUpperCase(tableCamelName.charAt(0))
+                        + tableCamelName.substring(1, tableCamelName.length());
     }
 
     public void addColumn(Column column) {
