@@ -3,6 +3,7 @@ package xyz.ivyxjc;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.AbstractApplicationContext;
 import xyz.ivyxjc.config.DatabaseConfig;
+import xyz.ivyxjc.model.Schema;
 import xyz.ivyxjc.model.Table;
 
 import java.io.IOException;
@@ -14,9 +15,13 @@ public class Main {
                 new AnnotationConfigApplicationContext(DatabaseConfig.class);
         DB db = context.getBean(DB.class);
         GeneratorCore generatorCore = context.getBean(GeneratorCore.class);
-        Table table =
+        Schema schema =
                 db.getDbStructure(
                         null, PropertiesProvider.getSchema(), PropertiesProvider.getTable());
-        generatorCore.generateCore(table, "xyz.ivyxjc");
+        for (String tableName : schema.getTablesMap().keySet()) {
+            System.out.println(tableName);
+            Table table = schema.getTable(tableName);
+            generatorCore.generateCore(table, PropertiesProvider.getBasePackageName());
+        }
     }
 }

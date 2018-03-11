@@ -32,7 +32,8 @@ public class ${className} {
 
 
 <#macro generateImports>
-	import java.sql.Types;
+import xyz.ivyxjc.DBColumn;
+import java.sql.Types;
     <#list imports as import>
 import ${import.name};
     </#list>

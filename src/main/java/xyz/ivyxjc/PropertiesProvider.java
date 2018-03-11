@@ -16,23 +16,23 @@ public class PropertiesProvider {
     }
 
     public static String getBasePackageName() {
-        return props.getProperty("basePackageName");
+        return props.getProperty("pojo_generator.basePackageName");
     }
 
     public static String getCatalog() {
-        return props.getProperty("catalog");
+        return props.getProperty("pojo_generator.catalog");
     }
 
     public static String getSchema() {
-        return props.getProperty("schema");
+        return props.getProperty("pojo_generator.schema");
     }
 
     public static String getTable() {
-        return props.getProperty("table");
+        return props.getProperty("pojo_generator.tableNamePattern");
     }
 
     public static String getTables() {
-        return props.getProperty("tables");
+        return props.getProperty("pojo_generator.tables");
     }
 
     public static Properties loadProperties(String resourceName) {

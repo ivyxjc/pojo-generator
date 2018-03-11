@@ -6,6 +6,7 @@ import freemarker.template.TemplateException;
 import org.springframework.stereotype.Service;
 import xyz.ivyxjc.model.Column;
 import xyz.ivyxjc.model.Table;
+import xyz.ivyxjc.utils.CommonUtils;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -39,11 +40,14 @@ public class GeneratorCore {
         try {
             Template template = cfg.getTemplate("${className}.java.ftl");
             String packageNameWithBackslash = packageName.replace(".", "\\");
-            Writer writer =
-                    new FileWriter(
-                            String.format(
-                                    "src\\main\\java\\%s\\%s.java",
-                                    packageNameWithBackslash, table.getTableCamelNameFirstUpper()));
+            String targetPackageName =
+                    String.format("src\\main\\java\\%s", packageNameWithBackslash);
+            CommonUtils.enablePathExist(targetPackageName);
+            String targetFilePath =
+                    String.format(
+                            "src\\main\\java\\%s\\%s.java",
+                            packageNameWithBackslash, table.getTableCamelNameFirstUpper());
+            Writer writer = new FileWriter(targetFilePath);
             template.process(map, writer);
         } catch (IOException | TemplateException e) {
             e.printStackTrace();
