@@ -14,8 +14,9 @@ public class Main {
                 new AnnotationConfigApplicationContext(DatabaseConfig.class);
         DB db = context.getBean(DB.class);
         GeneratorCore generatorCore = context.getBean(GeneratorCore.class);
-        Table table = db.getDbStructure(null, "douban", "movie_detail");
+        Table table =
+                db.getDbStructure(
+                        null, PropertiesProvider.getSchema(), PropertiesProvider.getTable());
         generatorCore.generateCore(table, "xyz.ivyxjc");
-
     }
 }
