@@ -1,8 +1,8 @@
-package xyz.ivyxjc.model;
+package xyz.ivyxjc.pojogenerator.model;
 
 import com.mysql.cj.core.MysqlType;
-import xyz.ivyxjc.TypesMap;
-import xyz.ivyxjc.utils.CommonUtils;
+import xyz.ivyxjc.pojogenerator.resources.TypesMap;
+import xyz.ivyxjc.pojogenerator.utils.CommonUtils;
 
 public class Column {
     private Class javaType;

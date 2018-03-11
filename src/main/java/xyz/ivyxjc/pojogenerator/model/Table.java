@@ -1,22 +1,25 @@
-package xyz.ivyxjc.model;
+package xyz.ivyxjc.pojogenerator.model;
 
-import xyz.ivyxjc.utils.CommonUtils;
+import xyz.ivyxjc.pojogenerator.utils.CommonUtils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Table {
     private String tableName;
     private String tableCamelName;
     private String tableCamelNameFirstUpper;
-    private List<Column> mColumns;
+    private Map<String, Column> mColumnMap;
+
 
     public Table() {
-        mColumns = new ArrayList<>();
+        mColumnMap = new HashMap<>();
     }
 
     public Table(String tableName) {
-        this.mColumns = new ArrayList<>();
+        this.mColumnMap = new HashMap<>();
         this.tableName = tableName;
         this.tableCamelName = CommonUtils.convertDbTypeToCamel(tableName);
         this.tableCamelNameFirstUpper =
@@ -36,16 +39,32 @@ public class Table {
                         + tableCamelName.substring(1, tableCamelName.length());
     }
 
+    public void setSpecificClassName(String specificClassName) {
+        tableCamelNameFirstUpper = specificClassName;
+    }
+
+    public Column getColumn(String columnName) {
+        return mColumnMap.get(columnName);
+    }
+
+    public void removeColumn(String columnName) {
+        mColumnMap.remove(columnName);
+    }
+
     public void addColumn(Column column) {
-        mColumns.add(column);
+        mColumnMap.put(column.getColumnName(), column);
     }
 
     public List<Column> getColumns() {
-        return mColumns;
+        return new ArrayList<>(mColumnMap.values());
     }
 
-    public void setColumns(List<Column> columns) {
-        mColumns = columns;
+    public Map<String, Column> getColumnMap() {
+        return mColumnMap;
+    }
+
+    public void setColumnMap(Map<String, Column> columnMap) {
+        mColumnMap = columnMap;
     }
 
     public String getTableCamelName() {
@@ -64,3 +83,5 @@ public class Table {
         this.tableCamelNameFirstUpper = tableCamelNameFirstUpper;
     }
 }
+
+

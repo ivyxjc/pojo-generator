@@ -1,11 +1,10 @@
-package xyz.ivyxjc;
+package xyz.ivyxjc.pojogenerator.core;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-import xyz.ivyxjc.model.Column;
-import xyz.ivyxjc.model.Schema;
-import xyz.ivyxjc.model.Table;
+import xyz.ivyxjc.pojogenerator.model.Column;
+import xyz.ivyxjc.pojogenerator.model.Schema;
+import xyz.ivyxjc.pojogenerator.model.Table;
 
 import javax.sql.DataSource;
 import java.sql.ResultSet;
@@ -13,9 +12,6 @@ import java.sql.SQLException;
 
 @Repository
 public class DB {
-
-    @Autowired
-    private JdbcTemplate mJdbcTemplate;
 
     @Autowired
     private DataSource mDataSource;

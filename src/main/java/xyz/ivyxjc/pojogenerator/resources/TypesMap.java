@@ -1,4 +1,4 @@
-package xyz.ivyxjc;
+package xyz.ivyxjc.pojogenerator.resources;
 
 import java.util.HashMap;
 import java.util.Map;

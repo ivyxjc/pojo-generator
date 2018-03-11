@@ -1,4 +1,6 @@
-package xyz.ivyxjc.utils;
+package xyz.ivyxjc.pojogenerator.utils;
+
+import xyz.ivyxjc.pojogenerator.model.Table;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -47,5 +49,9 @@ public class CommonUtils {
                 baseFile.mkdir();
             }
         }
+    }
+
+    public static Table initOneTable(Table table) {
+        return new Table(table.getTableName());
     }
 }

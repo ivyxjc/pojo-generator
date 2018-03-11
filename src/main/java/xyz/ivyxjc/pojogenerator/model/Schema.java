@@ -1,4 +1,4 @@
-package xyz.ivyxjc.model;
+package xyz.ivyxjc.pojogenerator.model;
 
 import java.util.HashMap;
 import java.util.Map;

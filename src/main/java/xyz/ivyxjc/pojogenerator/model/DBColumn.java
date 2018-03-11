@@ -1,4 +1,4 @@
-package xyz.ivyxjc;
+package xyz.ivyxjc.pojogenerator.model;
 
 public @interface DBColumn {
     Class javaType();
