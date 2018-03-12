@@ -1,11 +1,13 @@
-package xyz.ivyxjc.model;
+package xyz.ivyxjc.pojogenerator.model;
 
 import com.mysql.cj.core.MysqlType;
-import xyz.ivyxjc.utils.CommonUtils;
+import xyz.ivyxjc.pojogenerator.resources.TypesMap;
+import xyz.ivyxjc.pojogenerator.utils.CommonUtils;
 
 public class Column {
     private Class javaType;
     private int columnDbType;
+    private String columnDbTypeStr;
     private String columnName;
     private String columnCamelName;
     private String columnCamelNameWithFirstUpper;
@@ -15,6 +17,7 @@ public class Column {
     public Column(String columnName, int columnDbType) {
         this.columnName = columnName;
         this.columnDbType = columnDbType;
+        this.columnDbTypeStr = TypesMap.get(columnDbType);
         String javaTypeStr = MysqlType.getByJdbcType(columnDbType).getClassName();
         try {
             if (javaTypeStr.equals("[B")) {
@@ -27,7 +30,9 @@ public class Column {
             javaType = String.class;
         }
         this.columnCamelName = CommonUtils.convertDbTypeToCamel(columnName);
-        this.columnCamelNameWithFirstUpper = Character.toUpperCase(columnCamelName.charAt(0)) + columnCamelName.substring(1, columnCamelName.length());
+        this.columnCamelNameWithFirstUpper =
+                Character.toUpperCase(columnCamelName.charAt(0))
+                        + columnCamelName.substring(1, columnCamelName.length());
     }
 
     public Class getJavaType() {
@@ -84,5 +89,13 @@ public class Column {
 
     public void setSchemaName(String schemaName) {
         this.schemaName = schemaName;
+    }
+
+    public String getColumnDbTypeStr() {
+        return columnDbTypeStr;
+    }
+
+    public void setColumnDbTypeStr(String columnDbTypeStr) {
+        this.columnDbTypeStr = columnDbTypeStr;
     }
 }

@@ -6,16 +6,12 @@ package ${packageName};
 
 <@generateImports/>
 
-public class ${className} {
+<@generateClassName/>
 
-	//alias
-	public static final String TABLE_ALIAS = "${className}";
-
-	//columns START
 <#list table.columns as column>
+	@DBColumn(javaType = ${column.javaType.simpleName}.class,columnType = ${column.columnDbTypeStr},columnName = "${column.columnName}")
 	private ${column.javaType.simpleName} ${column.columnCamelName};
 </#list>
-	//columns END
 <@generateGetterSetter/>
 }
 
@@ -33,8 +29,26 @@ public class ${className} {
 
 
 
+<#macro generateClassName>
+	<#if isBase??>
+	public class ${className} {
+	<#else>
+	public class ${className} extends ${baseClassName} {
+	</#if>
+</#macro>
+
+<#macro generateTableAlias>
+	<#if isBase??>
+	public class ${className} {
+	<#else>
+	public class ${className} extends ${baseClassName} {
+	</#if>
+</#macro>
+
 <#macro generateImports>
-    <#list imports as import>
+import xyz.ivyxjc.pojogenerator.model.DBColumn;
+import java.sql.Types;
+	<#list imports as import>
 import ${import.name};
-    </#list>
+	</#list>
 </#macro>
