@@ -13,7 +13,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import javax.sql.DataSource;
 
 @Configuration
-@ComponentScan(basePackages = {"xyz.ivyxjc"})
+@ComponentScan(basePackages = {"xyz.ivyxjc.pojogenerator"})
 @PropertySource(value = {"classpath:database/jdbc.properties"})
 public class DatabaseConfig {
 

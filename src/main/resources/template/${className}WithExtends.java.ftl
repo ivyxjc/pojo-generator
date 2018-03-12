@@ -6,7 +6,7 @@ package ${packageName};
 
 <@generateImports/>
 
-<@generateClassName/>
+public class ${className} extends ${superClassName} {
 
 <#list table.columns as column>
 	@DBColumn(javaType = ${column.javaType.simpleName}.class,columnType = ${column.columnDbTypeStr},columnName = "${column.columnName}")
@@ -27,28 +27,10 @@ package ${packageName};
     </#list>
 </#macro>
 
-
-
-<#macro generateClassName>
-	<#if isBase??>
-	public class ${className} {
-	<#else>
-	public class ${className} extends ${baseClassName} {
-	</#if>
-</#macro>
-
-<#macro generateTableAlias>
-	<#if isBase??>
-	public class ${className} {
-	<#else>
-	public class ${className} extends ${baseClassName} {
-	</#if>
-</#macro>
-
 <#macro generateImports>
 import xyz.ivyxjc.pojogenerator.model.DBColumn;
 import java.sql.Types;
-	<#list imports as import>
+    <#list imports as import>
 import ${import.name};
-	</#list>
+    </#list>
 </#macro>

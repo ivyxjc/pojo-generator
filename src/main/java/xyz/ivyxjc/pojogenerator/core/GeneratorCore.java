@@ -18,12 +18,45 @@ import java.util.*;
 @Service
 public class GeneratorCore {
 
-    public void generateCore(Table table, String packageName, String className, boolean isBase) {
-        Configuration cfg = new Configuration(Configuration.DEFAULT_INCOMPATIBLE_IMPROVEMENTS);
+    private Table table;
+    private String packageName;
+    private String className;
+    private Configuration cfg;
+    private Template templateWithExtends;
+    private Template templateWithoutExtends;
+    private Writer writer;
 
-        cfg.setClassForTemplateLoading(Main.class, "/template");
-        cfg.setDefaultEncoding("UTF-8");
-        cfg.setDefaultEncoding("UTF-8");
+    public GeneratorCore() throws IOException {
+        this.cfg = new Configuration(Configuration.DEFAULT_INCOMPATIBLE_IMPROVEMENTS);
+        this.cfg.setClassForTemplateLoading(Main.class, "/template");
+        this.cfg.setDefaultEncoding("UTF-8");
+        this.cfg.setDefaultEncoding("UTF-8");
+        this.templateWithExtends = cfg.getTemplate("${className}WithExtends.java.ftl");
+        this.templateWithoutExtends = cfg.getTemplate("${className}WithoutExtends.java.ftl");
+    }
+
+
+    public void init(Table table, String packageName, String className) throws IOException {
+        this.table = table;
+        this.packageName = packageName;
+        this.className = className;
+        String packageNameWithBackslash = packageName.replace(".", "\\");
+        String targetPackageName =
+                String.format("src\\main\\java\\%s", packageNameWithBackslash);
+        CommonUtils.enablePathExist(targetPackageName);
+        String targetFilePath =
+                String.format(
+                        "src\\main\\java\\%s\\%s.java",
+                        packageNameWithBackslash, className);
+        writer = new FileWriter(targetFilePath);
+    }
+
+    public GeneratorCore setTalbe(Table talbe) {
+        this.table = talbe;
+        return this;
+    }
+
+    public void generateCore(boolean haveSuperClass) throws IOException, TemplateException {
 
         Set<Class> set = new HashSet<>();
         Map<String, Object> map = new HashMap<>();
@@ -33,40 +66,16 @@ public class GeneratorCore {
                 set.add(column.getJavaType());
             }
         }
-
         list.addAll(set);
         map.put("imports", list);
         map.put("packageName", packageName);
         map.put("className", className);
         map.put("table", table);
-        if (isBase) {
-            map.put("isBase", "false");
+        if (haveSuperClass) {
+            map.put("superClassName", PropertiesProvider.INSTANCE.getSuperClassName());
+            templateWithExtends.process(map, writer);
         } else {
-            map.put("baseClassName", PropertiesProvider.INSTANCE.getBaseClass());
+            templateWithoutExtends.process(map, writer);
         }
-        try {
-            Template template = cfg.getTemplate("${className}.java.ftl");
-            String packageNameWithBackslash = packageName.replace(".", "\\");
-            String targetPackageName =
-                    String.format("src\\main\\java\\%s", packageNameWithBackslash);
-            CommonUtils.enablePathExist(targetPackageName);
-            String targetFilePath =
-                    String.format(
-                            "src\\main\\java\\%s\\%s.java",
-                            packageNameWithBackslash, table.getTableCamelNameFirstUpper());
-            Writer writer = new FileWriter(targetFilePath);
-            template.process(map, writer);
-        } catch (IOException | TemplateException e) {
-            e.printStackTrace();
-        }
-    }
-
-
-    public void generateCore(Table table, String packageName, boolean isBase) {
-        generateCore(table, packageName, table.getTableCamelNameFirstUpper(), isBase);
-    }
-
-    public void generateCore(Table table, String packageName) {
-        generateCore(table, packageName, table.getTableCamelNameFirstUpper(), false);
     }
 }
