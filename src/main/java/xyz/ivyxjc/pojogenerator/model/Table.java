@@ -47,12 +47,16 @@ public class Table {
         return mColumnMap.get(columnName);
     }
 
-    public void removeColumn(String columnName) {
-        mColumnMap.remove(columnName);
+    public Column removeColumn(String columnName) {
+        return mColumnMap.remove(columnName);
     }
 
     public void addColumn(Column column) {
         mColumnMap.put(column.getColumnName(), column);
+    }
+
+    public void putAllColumns(Table table) {
+        mColumnMap.putAll(table.getColumnMap());
     }
 
     public List<Column> getColumns() {

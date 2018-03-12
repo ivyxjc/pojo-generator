@@ -12,20 +12,20 @@ object PropertiesProvider {
     val schema: String
         get() = props!!.getProperty("pojo_generator.schema")
 
-    val table: String
+    val tableNamePattern: String
         get() = props!!.getProperty("pojo_generator.tableNamePattern")
 
     val catalog: String?
         get() = props?.getProperty("pojo_generator.catalog")
 
-    val tables: String?
-        get() = props?.getProperty("pojo_generator.tables")
+    val superClassName: String?
+        get() = props?.getProperty("pojo_generator.superClassName")
 
-    val baseClass: String?
-        get() = props?.getProperty("pojo_generator.baseClassName")
+    val baseColumnNames: Array<String>?
+        get() = props?.getProperty("pojo_generator.baseColumnNames")?.split(",")?.toTypedArray()
 
-    val baseColumnNames: String?
-        get() = props?.getProperty("pojo_generator.baseColumnNames")
+    val specificClassName: String?
+        get() = props?.getProperty("pojo_generator.specificClassName")
 
     init {
         props = loadProperties("pojo-generator.properties")
